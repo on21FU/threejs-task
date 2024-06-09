@@ -14,14 +14,27 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+const geometry = new THREE.TorusKnotGeometry(10, 2, 100, 16);
+const material = new THREE.MeshStandardMaterial({ color: 0xff6347 });
+const torusKnot = new THREE.Mesh(geometry, material);
+
+scene.add(torusKnot);
+
 var pointLight = new THREE.PointLight(0xffffff, 600);
 pointLight.position.set(0, 0, 20);
 scene.add(pointLight);
 
 function animate() {
   requestAnimationFrame(animate);
+  torusKnot.rotateX(0.01)
+  torusKnot.rotateY(0.01)
+  torusKnot.rotateZ(0.01)
   renderer.render(scene, camera);
 }
 
 animate();
 
+window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    camera.position.z = 50 + scrollY;
+  });
